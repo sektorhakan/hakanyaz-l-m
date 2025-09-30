@@ -1,181 +1,254 @@
-body {
+/* Genel reset */
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000; /* her zaman siyah arka plan */
-  color: white;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  align-items: center;
-  background: #111;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #fff;
 }
 
-.left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.username {
-  font-weight: bold;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.avatar-menu {
-  position: absolute;
-  top: 60px;
-  left: 20px;
-  background: #222;
-  border-radius: 8px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.avatar-menu button {
-  background: #333;
-  border: none;
-  color: white;
-  padding: 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.avatar-menu button:hover {
-  background: #555;
-}
-
-/* Nav buttons */
-.nav-btn {
-  margin-left: 10px;
-  background: transparent;
-  border: 1px solid #444;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.nav-btn:hover {
-  background: #444;
-}
-
-.welcome {
+/* Arka plan animasyonu */
+body::before {
+  content: "";
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #222;
-  padding: 10px 20px;
-  border-radius: 6px;
-  animation: fade 2s;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #f0e68c, #ffb6c1, #87cefa, #dda0dd);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  z-index: -1;
 }
 
-/* Bölümler */
-.page-section {
-  padding: 60px;
-  min-height: 70vh;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-.page-section.active {
-  opacity: 1;
-}
-
-/* Logo animasyonlu yazı */
-.logo-text {
-  font-size: 48px;
-  font-weight: bold;
-  text-align: center;
-  background: linear-gradient(270deg, #ff0000, #00ffea, #ff00f7, #00ff00);
-  background-size: 800% 800%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 8s ease infinite;
-}
-@keyframes gradientShift {
+@keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Auth */
-.auth-container {
+/* Navbar */
+nav {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff6ec7, #ff9a00, #00c6ff, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientText 5s linear infinite;
+}
+
+@keyframes gradientText {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+.nav-links {
+  display: flex;
   gap: 20px;
 }
-.auth-container form {
+
+.nav-links button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-links button:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+/* Avatar ve kullanıcı */
+#userInfo {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
-  background: #111;
-  padding: 20px;
-  border-radius: 10px;
-}
-.auth-container input, .auth-container button {
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-}
-.auth-container button {
-  background: #444;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.auth-container button:hover {
-  background: #666;
+  position: relative;
 }
 
-/* Profil */
-.profile-pic {
-  width: 100px;
-  height: 100px;
+#userAvatar {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  display: block;
-  margin-bottom: 15px;
-}
-.custom-file-btn {
-  display: inline-block;
-  background: #444;
-  color: white;
-  padding: 10px;
-  border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
-}
-.custom-file-btn:hover {
-  background: #666;
-}
-.save-btn {
-  margin-top: 10px;
-  background: #28a745;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.save-btn:hover {
-  background: #218838;
+  border: 2px solid #fff;
+  object-fit: cover;
 }
 
-/* Helpers */
-.hidden { display: none; }
+#usernameDisplay {
+  font-weight: bold;
+}
+
+#dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: rgba(0,0,0,0.8);
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#dropdown button {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#dropdown button:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Auth form */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 40px;
+}
+
+.auth-box {
+  background: rgba(0,0,0,0.6);
+  padding: 30px;
+  border-radius: 12px;
+  width: 300px;
+}
+
+.auth-box h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.auth-box input, .auth-box button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+}
+
+.auth-box input {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.auth-box button {
+  background: #ff6ec7;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-box button:hover {
+  background: #ff85d4;
+}
+
+/* Sayfa bölümleri */
+section {
+  display: none;
+  padding: 120px 20px 40px;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease;
+}
+
+section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Profil düzenleme */
+#profileSection {
+  max-width: 500px;
+  margin: 100px auto;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+#profileSection input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: #00c6ff;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+  background: #009ac7;
+}
+
+#saveProfileBtn {
+  background: #ff9a00;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#saveProfileBtn:hover {
+  background: #e08800;
+}
+
+/* Welcome Toast */
+.welcome {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 200;
+}
+.welcome.show {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -7,84 +7,81 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Üst Menü -->
-  <header class="header">
-    <div class="left">
-      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="avatar" id="avatar" class="avatar hidden">
-      <span id="usernameDisplay" class="username"></span>
-      <div id="avatarMenu" class="avatar-menu hidden">
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo logo-text">Hakan Yazılım Sektör</div>
+    <nav class="menu">
+      <button class="nav-btn" data-target="hero">Ana Sayfa</button>
+      <button class="nav-btn" data-target="about">Hakkımızda</button>
+      <button class="nav-btn" data-target="services">Hizmetler</button>
+      <button class="nav-btn" data-target="contact">İletişim</button>
+      <button id="authNavBtn" class="nav-btn" data-target="auth">Giriş / Kayıt</button>
+    </nav>
+    <div id="userInfo" class="hidden">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="avatar" class="avatar">
+      <span id="usernameDisplay"></span>
+      <div id="avatarMenu" class="hidden avatar-menu">
         <button id="openProfileBtn">Profil</button>
         <button id="logoutBtn">Çıkış Yap</button>
       </div>
     </div>
-    <div class="right">
-      <button class="nav-btn" data-target="hero">Ana Sayfa</button>
-      <button class="nav-btn" data-target="about">Hakkımızda</button>
-      <button class="nav-btn" data-target="services">Hizmetler</button>
-      <button class="nav-btn" data-target="projects">Projeler</button>
-      <button class="nav-btn" data-target="contact">İletişim</button>
-      <button id="authNavBtn" class="nav-btn" data-target="auth">Giriş / Kayıt</button>
-    </div>
   </header>
 
-  <!-- Hoşgeldin Mesajı -->
+  <!-- Welcome Toast -->
   <div id="welcomeMessage" class="welcome hidden"></div>
 
-  <!-- Bölümler -->
+  <!-- Sections -->
   <main>
     <section id="hero" class="page-section active">
-      <h1 class="logo-text">Hakan Yazılım Sektör</h1>
-      <p>Yazılım dünyasında yenilikçi çözümler 🌍</p>
+      <h1>Hoş Geldiniz!</h1>
+      <p>Yazılım dünyasına bizimle adım atın.</p>
     </section>
 
     <section id="about" class="page-section hidden">
-      <h2>Hakkımızda</h2>
-      <p>Biz yazılım sektöründe yenilikler getiren bir ekibiz.</p>
+      <h1>Hakkımızda</h1>
+      <p>Biz, yazılım sektöründe yenilikçi çözümler sunan bir ekibiz.</p>
     </section>
 
     <section id="services" class="page-section hidden">
-      <h2>Hizmetler</h2>
-      <p>Web geliştirme, mobil uygulama, yapay zekâ projeleri.</p>
-    </section>
-
-    <section id="projects" class="page-section hidden">
-      <h2>Projeler</h2>
-      <p>Birçok sektöre özel yazılım çözümleri geliştirdik.</p>
+      <h1>Hizmetlerimiz</h1>
+      <p>Web geliştirme, mobil uygulama, yapay zeka çözümleri.</p>
     </section>
 
     <section id="contact" class="page-section hidden">
-      <h2>İletişim</h2>
-      <p>Bize ulaşın: info@hakanyazilim.com</p>
+      <h1>İletişim</h1>
+      <p>Bize ulaşın: hakan@sektor.com</p>
     </section>
 
+    <!-- Auth Section -->
     <section id="auth" class="page-section hidden">
       <div class="auth-container">
-        <!-- Giriş -->
-        <form id="loginForm">
+        <div class="login">
           <h2>Giriş Yap</h2>
-          <input type="email" id="loginEmail" placeholder="E-posta" required>
-          <input type="password" id="loginPassword" placeholder="Parola" required>
-          <button type="submit">Giriş Yap</button>
-        </form>
-
-        <!-- Kayıt -->
-        <form id="registerForm">
+          <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="E-posta" required>
+            <input type="password" id="loginPassword" placeholder="Parola" required>
+            <button type="submit">Giriş Yap</button>
+          </form>
+        </div>
+        <div class="register">
           <h2>Kayıt Ol</h2>
-          <input type="text" id="registerUsername" placeholder="Kullanıcı Adı" required>
-          <input type="email" id="registerEmail" placeholder="E-posta" required>
-          <input type="password" id="registerPassword" placeholder="Parola" required>
-          <input type="password" id="registerConfirmPassword" placeholder="Parolayı Doğrula" required>
-          <button type="submit">Kayıt Ol</button>
-        </form>
+          <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Kullanıcı Adı" required>
+            <input type="email" id="registerEmail" placeholder="E-posta" required>
+            <input type="password" id="registerPassword" placeholder="Parola" required>
+            <input type="password" id="registerConfirmPassword" placeholder="Parola Tekrar" required>
+            <button type="submit">Kayıt Ol</button>
+          </form>
+        </div>
       </div>
     </section>
 
+    <!-- Profile Section -->
     <section id="profile" class="page-section hidden">
-      <h2>Profil</h2>
-      <img id="profilePicPreview" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profil" class="profile-pic">
-      <input type="file" id="profileFile" hidden>
-      <label for="profileFile" class="custom-file-btn">📷 Fotoğraf Seç</label>
-      <button id="saveProfileBtn" class="save-btn">Kaydet</button>
+      <h1>Profil Ayarları</h1>
+      <img id="profilePicPreview" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="profile-pic">
+      <input type="file" id="profileFile" accept="image/*">
+      <button id="saveProfileBtn">Fotoğrafı Kaydet</button>
     </section>
   </main>
 
