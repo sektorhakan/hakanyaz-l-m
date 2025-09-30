@@ -1,117 +1,96 @@
-/* Genel stil */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
-  background: url('https://images.unsplash.com/photo-1518770660439-4636190af475')
-    no-repeat center center fixed;
-  background-size: cover;
+  font-family: Arial, sans-serif;
+  background: #0a0a0a;
+  color: #fff;
 }
 
-/* Navbar */
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  background: #111;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
   z-index: 1000;
 }
 
 .logo {
   font-size: 20px;
   font-weight: bold;
+  color: #00ffee;
 }
 
-.menu-toggle {
-  font-size: 28px;
-  cursor: pointer;
+.nav, #user-nav {
   display: none;
 }
 
-.nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
+.nav.active, #user-nav.active {
+  display: block;
 }
 
-.nav ul li a {
-  color: white;
+.nav ul, #user-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.nav a, #user-nav a {
+  color: #fff;
   text-decoration: none;
   transition: 0.3s;
 }
 
-.nav ul li a:hover {
-  color: #00ffea;
+.nav a:hover, #user-nav a:hover {
+  color: #00ffee;
 }
 
-/* Bölümler */
+/* Hero */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3em;
+  color: #00ffee;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ffee; }
+  to { text-shadow: 0 0 25px #00ffee, 0 0 50px #00ffee; }
+}
+
+.hero-subtitle {
+  margin-top: 10px;
+  font-size: 1.2em;
+  opacity: 0.8;
+}
+
 .section {
-  min-height: 100vh;
-  padding: 100px 50px;
+  padding: 40px;
   display: none;
-  animation: fade 0.5s ease-in-out;
 }
 
 .section.active {
   display: block;
+  animation: fadeIn 0.8s;
 }
 
-@keyframes fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Formlar */
-form {
-  margin: 15px 0;
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-}
-
-input, button {
-  padding: 10px;
-  margin: 5px 0;
-  border: none;
-  border-radius: 5px;
-}
-
-button {
-  background: #00ffea;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #00ccaa;
-}
-
-/* Mobil uyum */
-@media(max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-  .nav {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background: rgba(0,0,0,0.9);
-    width: 200px;
-  }
-  .nav.active {
-    display: block;
-  }
-  .nav ul {
-    flex-direction: column;
-    padding: 10px;
-  }
-}
-/* Giriş & Kayıt container */
+/* Giriş / Kayıt */
 .auth-container {
   display: flex;
   justify-content: center;
@@ -131,23 +110,15 @@ button:hover {
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
-.auth-box h2 {
-  margin: 0 0 10px;
-  text-align: center;
-}
-
-/* Inputlar */
 .auth-box input {
   padding: 10px;
   border-radius: 6px;
   border: none;
-  outline: none;
 }
 
-/* Butonlar */
 .btn {
   padding: 12px;
-  background: #00ffea;
+  background: #00ffee;
   border: none;
   border-radius: 6px;
   font-weight: bold;
@@ -158,4 +129,20 @@ button:hover {
 .btn:hover {
   background: #00ccaa;
   transform: scale(1.05);
+}
+
+/* Profil */
+.profil-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+#profil-resim {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00ffee;
 }

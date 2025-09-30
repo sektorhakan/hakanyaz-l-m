@@ -4,166 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hakan Yazılım Sektör</title>
-  <style>
-    /* Animasyonlu gradient arkaplan */
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(270deg, #1f1c2c, #928DAB, #00c9ff, #92fe9d);
-      background-size: 800% 800%;
-      animation: gradientBG 20s ease infinite;
-      color: #fff;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Navbar */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 15px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(6px);
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #00f5ff, #00ff88, #ff00ff);
-      background-size: 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shine 6s linear infinite;
-    }
-    @keyframes shine {
-      0% { background-position: 0% }
-      100% { background-position: 300% }
-    }
-    .menu-toggle {
-      font-size: 26px;
-      cursor: pointer;
-      display: none;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-      margin: 0;
-      padding: 0;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      transition: 0.3s;
-      position: relative;
-    }
-    nav a::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: #00ffea;
-      transition: width 0.3s;
-    }
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    /* Bölümler */
-    .section {
-      display: none;
-      padding: 60px 20px;
-      text-align: center;
-      animation: fadeIn 0.8s ease;
-    }
-    .section.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Auth container */
-    .auth-container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-    .auth-box {
-      background: rgba(0,0,0,0.6);
-      padding: 25px;
-      border-radius: 15px;
-      width: 280px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-shadow: 0 0 25px rgba(0,255,234,0.4);
-      transition: 0.3s;
-    }
-    .auth-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 35px rgba(0,255,234,0.7);
-    }
-    .auth-box h2 {
-      margin: 0 0 10px;
-      text-align: center;
-    }
-    .auth-box input {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
-    /* Neon buton */
-    .btn {
-      padding: 12px;
-      background: #00ffea;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea;
-    }
-    .btn:hover {
-      background: #00ccaa;
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #00ffea, 0 0 30px #00ffea;
-    }
-    #login-message {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    /* Mobil uyum */
-    @media (max-width: 768px) {
-      .menu-toggle { display: block; }
-      nav { display: none; }
-      nav.active { display: block; }
-      nav ul { flex-direction: column; gap: 10px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Header -->
   <header>
-    <div class="logo">Hakan Yazılım Sektör</div>
+    <div class="logo" id="site-title">Hakan Yazılım Sektör</div>
+    <nav id="user-nav" class="hidden">
+      <ul>
+        <li id="welcome-text"></li>
+        <li><a href="#" onclick="showSection('profil')">Profil</a></li>
+        <li><a href="#" onclick="logout()">Çıkış</a></li>
+      </ul>
+    </nav>
     <div class="menu-toggle" id="menu-toggle">☰</div>
     <nav class="nav" id="nav">
       <ul>
+        <li><a href="#" onclick="showSection('hero')">Ana Sayfa</a></li>
         <li><a href="#" onclick="showSection('hizmetler')">Hizmetlerimiz</a></li>
         <li><a href="#" onclick="showSection('projeler')">Projelerimiz</a></li>
         <li><a href="#" onclick="showSection('hakkinda')">Hakkımızda</a></li>
@@ -173,8 +30,14 @@
     </nav>
   </header>
 
-  <!-- Bölümler -->
-  <section id="hakkinda" class="section active">
+  <!-- Hero -->
+  <section id="hero" class="section active hero">
+    <h1 class="hero-title">Hakan Yazılım Sektör</h1>
+    <p class="hero-subtitle">Yazılımda geleceği inşa ediyoruz 🚀</p>
+  </section>
+
+  <!-- Diğer Bölümler -->
+  <section id="hakkinda" class="section">
     <h1>Hakkımızda</h1>
     <p>Hakan Yazılım Sektör, modern yazılım çözümleri geliştiren yenilikçi bir ekiptir.</p>
   </section>
@@ -196,9 +59,7 @@
 
   <!-- Login/Register -->
   <section id="giris" class="section">
-    <h1>Giriş / Kayıt</h1>
-
-    <div id="auth-area" class="auth-container">
+    <div class="auth-container">
       <!-- Giriş -->
       <form id="login-form" class="auth-box" onsubmit="return handleLogin(event)">
         <h2>Giriş Yap</h2>
@@ -217,103 +78,19 @@
         <button type="submit" class="btn">Kayıt Ol</button>
       </form>
     </div>
-
-    <!-- Giriş sonrası -->
-    <div id="welcome-area" style="display:none; text-align:center;">
-      <h2 id="welcome-message"></h2>
-      <button onclick="logout()" class="btn">Çıkış Yap</button>
-    </div>
-
     <p id="login-message"></p>
   </section>
 
-  <script>
-    // Menü toggle
-    const menuToggle = document.getElementById("menu-toggle");
-    const nav = document.getElementById("nav");
+  <!-- Profil -->
+  <section id="profil" class="section">
+    <h1>Profil Ayarları</h1>
+    <div class="profil-container">
+      <img id="profil-resim" src="https://via.placeholder.com/120" alt="Profil Resmi">
+      <input type="file" id="profil-input" accept="image/*">
+      <button class="btn" onclick="uploadProfile()">Profil Resmini Kaydet</button>
+    </div>
+  </section>
 
-    menuToggle.addEventListener("click", () => {
-      nav.classList.toggle("active");
-    });
-
-    // Bölüm geçişleri
-    function showSection(id) {
-      document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      nav.classList.remove("active");
-    }
-
-    // Kullanıcı listesi
-    function getUsers() {
-      return JSON.parse(localStorage.getItem("users") || "[]");
-    }
-    function saveUsers(users) {
-      localStorage.setItem("users", JSON.stringify(users));
-    }
-
-    // Açılışta kullanıcı kontrol
-    document.addEventListener("DOMContentLoaded", () => {
-      const currentUser = localStorage.getItem("currentUser");
-      if (currentUser) {
-        showWelcome(currentUser);
-      }
-    });
-
-    // Kayıt ol
-    function handleRegister(event) {
-      event.preventDefault();
-      const email = document.getElementById("reg-email").value.trim();
-      const username = document.getElementById("reg-username").value.trim();
-      const pass = document.getElementById("reg-password").value.trim();
-      const pass2 = document.getElementById("reg-password2").value.trim();
-
-      if (pass !== pass2) {
-        document.getElementById("login-message").innerText = "⚠️ Şifreler uyuşmuyor!";
-        return false;
-      }
-      let users = getUsers();
-      if (users.find(u => u.email === email)) {
-        document.getElementById("login-message").innerText = "⚠️ Bu e-posta zaten kayıtlı!";
-      } else {
-        users.push({ email: email, username: username, password: pass });
-        saveUsers(users);
-        document.getElementById("login-message").innerText = "✅ Kayıt başarılı! Şimdi giriş yapabilirsiniz.";
-      }
-      return false;
-    }
-
-    // Giriş yap
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById("login-email").value.trim();
-      const pass = document.getElementById("login-password").value.trim();
-      let users = getUsers();
-      let found = users.find(u => u.email === email && u.password === pass);
-
-      if (found) {
-        localStorage.setItem("currentUser", found.username);
-        showWelcome(found.username);
-        document.getElementById("login-message").innerText = "✅ Giriş başarılı!";
-      } else {
-        document.getElementById("login-message").innerText = "❌ Hatalı e-posta veya şifre!";
-      }
-      return false;
-    }
-
-    // Hoş geldin
-    function showWelcome(username) {
-      document.getElementById("auth-area").style.display = "none";
-      document.getElementById("welcome-area").style.display = "block";
-      document.getElementById("welcome-message").innerText = "Hoş geldin, " + username + " 👋";
-    }
-
-    // Çıkış
-    function logout() {
-      localStorage.removeItem("currentUser");
-      document.getElementById("auth-area").style.display = "flex";
-      document.getElementById("welcome-area").style.display = "none";
-      document.getElementById("login-message").innerText = "Çıkış yapıldı.";
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
