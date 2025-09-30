@@ -1,88 +1,100 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hakan Yazılım Sektör</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div class="user-info hidden" id="userInfo">
-      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar" id="avatar">
-      <span id="usernameDisplay"></span>
-      <div class="dropdown" id="dropdownMenu">
-        <button onclick="openProfile()">Profil</button>
-        <button onclick="logout()">Çıkış Yap</button>
+    <div id="left-area">
+      <!-- Avatar ve kullanıcı adı (girişten sonra görünür) -->
+      <div id="userInfo" class="user-info hidden">
+        <img id="avatar" class="avatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="avatar" />
+        <span id="usernameDisplay" class="username"></span>
+        <div id="avatarMenu" class="avatar-menu hidden">
+          <button class="menu-btn" id="openProfileBtn">Profil</button>
+          <button class="menu-btn" id="logoutBtn">Çıkış Yap</button>
+        </div>
       </div>
     </div>
-    <nav>
+
+    <nav id="mainNav">
       <ul>
-        <li><a href="#" onclick="showSection('hero')">Ana Sayfa</a></li>
-        <li><a href="#" onclick="showSection('hakkimizda')">Hakkımızda</a></li>
-        <li><a href="#" onclick="showSection('hizmetler')">Hizmetler</a></li>
-        <li><a href="#" onclick="showSection('projeler')">Projeler</a></li>
-        <li><a href="#" onclick="showSection('iletisim')">İletişim</a></li>
+        <li><button class="nav-btn" data-target="hero">Ana Sayfa</button></li>
+        <li><button class="nav-btn" data-target="hakkimizda">Hakkımızda</button></li>
+        <li><button class="nav-btn" data-target="hizmetler">Hizmetler</button></li>
+        <li><button class="nav-btn" data-target="projeler">Projeler</button></li>
+        <li><button class="nav-btn" data-target="iletisim">İletişim</button></li>
+        <li><button class="nav-btn" data-target="auth" id="authNavBtn">Giriş / Kayıt</button></li>
       </ul>
     </nav>
   </header>
 
-  <div id="welcomeMessage" class="welcome">Hoş geldin!</div>
+  <main id="main">
+    <div id="welcomeMessage" class="toast hidden"></div>
 
-  <section id="hero" class="page-section active">
-    <h1>Hakan Yazılım Sektör</h1>
-    <p>Yazılım dünyasında geleceğe yön veriyoruz 🚀</p>
-  </section>
+    <!-- Sections -->
+    <section id="hero" class="page-section active">
+      <h1 class="big-title">Hakan Yazılım Sektör</h1>
+      <p class="subtitle">Yazılım dünyasında geleceğe yön veriyoruz 🚀</p>
+    </section>
 
-  <section id="hakkimizda" class="page-section hidden">
-    <h2>Hakkımızda</h2>
-    <p>Biz yazılım sektöründe yenilikçi çözümler üreten bir ekibiz.</p>
-  </section>
+    <section id="hakkimizda" class="page-section hidden">
+      <h2>Hakkımızda</h2>
+      <p>Biz yazılım sektöründe yenilikçi çözümler üreten bir ekibiz.</p>
+    </section>
 
-  <section id="hizmetler" class="page-section hidden">
-    <h2>Hizmetler</h2>
-    <p>Web geliştirme, mobil uygulama ve yazılım danışmanlığı hizmetleri veriyoruz.</p>
-  </section>
+    <section id="hizmetler" class="page-section hidden">
+      <h2>Hizmetler</h2>
+      <p>Web geliştirme, mobil uygulama ve yazılım danışmanlığı hizmetleri veriyoruz.</p>
+    </section>
 
-  <section id="projeler" class="page-section hidden">
-    <h2>Projeler</h2>
-    <p>Gerçekleştirdiğimiz projeler modern teknolojiyle hazırlanmıştır.</p>
-  </section>
+    <section id="projeler" class="page-section hidden">
+      <h2>Projeler</h2>
+      <p>Gerçekleştirdiğimiz projeler modern teknolojiyle hazırlanmıştır.</p>
+    </section>
 
-  <section id="iletisim" class="page-section hidden">
-    <h2>İletişim</h2>
-    <p>Bize ulaşın: info@hakanyazilim.com</p>
-  </section>
+    <section id="iletisim" class="page-section hidden">
+      <h2>İletişim</h2>
+      <p>Bize ulaşın: info@hakanyazilim.com</p>
+    </section>
 
-  <!-- Auth: Giriş / Kayıt -->
-  <section class="auth visible" id="authSection">
-    <div class="form-container">
-      <form id="loginForm">
-        <h2>Giriş Yap</h2>
-        <input type="email" id="loginEmail" placeholder="Mail" required>
-        <input type="password" id="loginPassword" placeholder="Parola" required>
-        <button type="submit">Giriş Yap</button>
-      </form>
+    <!-- Auth (Giriş/Kayıt) - Sadece görünür: oturum yoksa başlangıçta veya auth nav tıklandığında -->
+    <section id="auth" class="page-section hidden">
+      <div class="auth-wrap">
+        <form id="loginForm" class="auth-box">
+          <h3>Giriş Yap</h3>
+          <input id="loginEmail" type="email" placeholder="E-posta" required />
+          <input id="loginPassword" type="password" placeholder="Parola" required />
+          <button class="primary-btn" type="submit">Giriş Yap</button>
+        </form>
 
-      <form id="registerForm">
-        <h2>Kayıt Ol</h2>
-        <input type="text" id="registerUsername" placeholder="Kullanıcı Adı" required>
-        <input type="email" id="registerEmail" placeholder="Mail" required>
-        <input type="password" id="registerPassword" placeholder="Parola" required>
-        <input type="password" id="registerConfirmPassword" placeholder="Parola Tekrar" required>
-        <button type="submit">Kayıt Ol</button>
-      </form>
-    </div>
-  </section>
+        <form id="registerForm" class="auth-box">
+          <h3>Kayıt Ol</h3>
+          <input id="registerUsername" type="text" placeholder="Kullanıcı Adı" required />
+          <input id="registerEmail" type="email" placeholder="E-posta" required />
+          <input id="registerPassword" type="password" placeholder="Parola" required />
+          <input id="registerConfirmPassword" type="password" placeholder="Parola Tekrar" required />
+          <button class="primary-btn" type="submit">Kayıt Ol</button>
+        </form>
+      </div>
+    </section>
 
-  <section id="profileSection" class="hidden">
-    <h2>Profil Ayarları</h2>
-    <input type="file" id="profilePicInput">
-    <button class="btn-profile" onclick="saveProfilePic()">📷 Kaydet</button>
-    <div>
-      <img id="profilePicPreview" class="profile-pic" alt="">
-    </div>
-  </section>
+    <!-- Profil -->
+    <section id="profile" class="page-section hidden">
+      <h3>Profil Ayarları</h3>
+      <div class="profile-card">
+        <img id="profilePicPreview" class="profile-pic" src="https://via.placeholder.com/120" alt="profil" />
+        <!-- gizli gerçek file input -->
+        <input id="profileFile" type="file" accept="image/*" class="file-input" />
+        <!-- özel buton -->
+        <label for="profileFile" class="file-btn">📷 Fotoğraf Seç</label>
+        <button id="saveProfileBtn" class="save-btn">Fotoğrafı Kaydet</button>
+      </div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>

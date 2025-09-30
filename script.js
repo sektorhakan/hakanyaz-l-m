@@ -1,136 +1,162 @@
-// Elemanlar
-const avatar = document.getElementById("avatar");
-const dropdownMenu = document.getElementById("dropdownMenu");
+/* ---------- Veri: users ve currentUser ---------- */
+// users: obje keyed by email. currentUser: email string (or null)
+let users = JSON.parse(localStorage.getItem("users") || "{}");
+let currentUserEmail = localStorage.getItem("currentUserEmail") || null;
+
+/* ---------- Elemanlar ---------- */
+const navBtns = document.querySelectorAll(".nav-btn");
+const sections = document.querySelectorAll(".page-section");
+const authSection = document.getElementById("auth");
 const userInfo = document.getElementById("userInfo");
+const avatar = document.getElementById("avatar");
+const avatarMenu = document.getElementById("avatarMenu");
 const usernameDisplay = document.getElementById("usernameDisplay");
 const welcomeMessage = document.getElementById("welcomeMessage");
-const authSection = document.getElementById("authSection");
+const authNavBtn = document.getElementById("authNavBtn");
+const profileSection = document.getElementById("profile");
 
-// Dropdown açma / kapama
-avatar && avatar.addEventListener("click", () => {
-  dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
-});
-
-// Kullanıcı verisi
-let users = JSON.parse(localStorage.getItem("users")) || {};
-let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
-
-// Hoşgeldin mesajı göster, 2 saniye sonra gizle
-function showWelcome(username) {
-  welcomeMessage.textContent = `Hoş geldin ${username}!`;
-  welcomeMessage.style.display = "block";
-  setTimeout(() => {
-    welcomeMessage.style.display = "none";
-  }, 2000);
+/* ---------- Yardımcı fonksiyonlar ---------- */
+function saveUsers(){ localStorage.setItem("users", JSON.stringify(users)); }
+function setCurrentUser(email){
+  currentUserEmail = email;
+  if(email) localStorage.setItem("currentUserEmail", email);
+  else localStorage.removeItem("currentUserEmail");
 }
 
-// Bölüm göster / gizle
-function showSection(id) {
-  document.querySelectorAll(".page-section").forEach(sec => {
-    sec.classList.add("hidden");
-    sec.classList.remove("active");
+/* Bölüm gösterme: yalnızca hedef görünür, animasyon ver */
+function showSection(id){
+  sections.forEach(s=>{
+    if(s.id === id){
+      s.classList.remove("hidden");
+      s.classList.add("active");
+      // küçük anim: scroll top
+      window.scrollTo({top:0,behavior:"smooth"});
+    } else {
+      s.classList.remove("active");
+      s.classList.add("hidden");
+    }
   });
-  const target = document.getElementById(id);
-  if (target) {
-    target.classList.remove("hidden");
-    target.classList.add("active");
+
+  // auth görünürlüğü: eğer oturum yok ve hedef 'auth' ise göster; aksi halde gizle
+  if(id === "auth" && !currentUserEmail){
+    authSection.classList.remove("hidden");
+    authSection.classList.add("active");
+  } else {
+    authSection.classList.remove("active");
+    authSection.classList.add("hidden");
   }
 }
 
-// Kayıt ol
-document.getElementById("registerForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const username = document.getElementById("registerUsername").value;
-  const email = document.getElementById("registerEmail").value;
-  const password = document.getElementById("registerPassword").value;
-  const confirm = document.getElementById("registerConfirmPassword").value;
+/* Hoşgeldin toast (2 saniye) */
+function showWelcomeToast(name){
+  welcomeMessage.textContent = `Hoş geldin ${name}!`;
+  welcomeMessage.classList.remove("hidden");
+  setTimeout(()=> welcomeMessage.classList.add("hidden"), 2000);
+}
 
-  if (password !== confirm) {
-    alert("Parolalar eşleşmiyor!");
-    return;
-  }
-  if (users[email]) {
-    alert("Bu mail zaten kayıtlı!");
-    return;
-  }
+/* Avatar menu toggle */
+avatar && avatar.addEventListener("click", ()=> avatarMenu.classList.toggle("hidden"));
 
-  users[email] = { username, email, password, profilePic: "" };
-  localStorage.setItem("users", JSON.stringify(users));
-  alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
-
-  // Giriş formuna geç
-  showSection("hero"); // istersen doğrudan hero ya da auth kısmına
+/* Nav buton click atanması */
+navBtns.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const target = btn.dataset.target;
+    showSection(target);
+    // active class on nav
+    navBtns.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+  });
 });
 
-// Giriş yap
-document.getElementById("loginForm").addEventListener("submit", function(e) {
+/* ---------- Auth: Kayıt ---------- */
+document.getElementById("registerForm").addEventListener("submit", function(e){
   e.preventDefault();
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
+  const u = document.getElementById("registerUsername").value.trim();
+  const em = document.getElementById("registerEmail").value.trim().toLowerCase();
+  const p = document.getElementById("registerPassword").value;
+  const c = document.getElementById("registerConfirmPassword").value;
 
-  if (!users[email]) {
-    alert("Böyle bir kullanıcı yok!");
-    return;
-  }
-  if (users[email].password !== password) {
-    alert("Parola yanlış!");
-    return;
-  }
+  if(!u || !em || !p){ alert("Tüm alanları doldurun."); return; }
+  if(p !== c){ alert("Parolalar eşleşmiyor."); return; }
+  if(users[em]){ alert("Bu e-posta zaten kayıtlı."); return; }
 
-  currentUser = users[email];
-  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  users[em] = { username: u, email: em, password: p, profilePic: "" };
+  saveUsers();
+  alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+  // otomatik auth sayfasına yönlendir (kullanıcının tekrar giriş yapmasını isteyerek)
+  showSection("auth");
+});
 
+/* ---------- Auth: Giriş ---------- */
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const em = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const p = document.getElementById("loginPassword").value;
+  if(!users[em]){ alert("Böyle bir kullanıcı yok."); return; }
+  if(users[em].password !== p){ alert("Parola yanlış."); return; }
+
+  // giriş başarılı: kalıcı oturum setle
+  setCurrentUser(em);
   // UI güncelle
-  authSection.classList.remove("visible");
-  authSection.classList.add("hidden");
-  userInfo.classList.remove("hidden");
-  usernameDisplay.textContent = currentUser.username;
-  avatar.src = currentUser.profilePic || avatar.src;
-
-  showWelcome(currentUser.username);
+  loginUIUpdate();
+  showWelcomeToast(users[em].username);
   showSection("hero");
 });
 
-// Çıkış yap
-function logout() {
-  currentUser = null;
-  localStorage.removeItem("currentUser");
-  location.reload();
+/* ---------- Oturum açık mı kontrolü ---------- */
+function loginUIUpdate(){
+  if(!currentUserEmail) return;
+  const u = users[currentUserEmail];
+  if(!u) { setCurrentUser(null); return; }
+  userInfo.classList.remove("hidden");
+  usernameDisplay.textContent = u.username;
+  avatar.src = u.profilePic || avatar.src;
+  // auth gizle
+  authSection.classList.add("hidden");
 }
 
-// Profil aç
-function openProfile() {
-  document.getElementById("profileSection").classList.remove("hidden");
-}
+/* ---------- Çıkış ---------- */
+document.getElementById("logoutBtn").addEventListener("click", function(){
+  setCurrentUser(null);
+  userInfo.classList.add("hidden");
+  avatar.src = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+  // auth görünür hale getir
+  showSection("auth");
+});
 
-// Profil resmini kaydet
-function saveProfilePic() {
-  const input = document.getElementById("profilePicInput");
-  if (!input.files || input.files.length === 0) return;
+/* ---------- Profil: resim seç & kaydet ---------- */
+const fileInput = document.getElementById("profileFile");
+const saveBtn = document.getElementById("saveProfileBtn");
+const preview = document.getElementById("profilePicPreview");
 
-  const file = input.files[0];
-  const reader = new FileReader();
-  reader.onload = function() {
-    currentUser.profilePic = reader.result;
-    users[currentUser.email] = currentUser;
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    document.getElementById("profilePicPreview").src = reader.result;
-    avatar.src = reader.result;
+saveBtn.addEventListener("click", function(){
+  if(!currentUserEmail){ alert("Lütfen önce giriş yapın."); return; }
+  const f = fileInput.files[0];
+  if(!f){ alert("Lütfen bir dosya seçin."); return; }
+
+  const r = new FileReader();
+  r.onload = function(e){
+    users[currentUserEmail].profilePic = e.target.result;
+    saveUsers();
+    // persist currentUser image
+    avatar.src = e.target.result;
+    preview.src = e.target.result;
+    alert("Profil fotoğrafı kaydedildi.");
   };
-  reader.readAsDataURL(file);
-}
+  r.readAsDataURL(f);
+});
 
-// Sayfa yüklendiğinde kontrol
-window.onload = function() {
-  if (currentUser) {
-    authSection.classList.remove("visible");
-    authSection.classList.add("hidden");
-    userInfo.classList.remove("hidden");
-    usernameDisplay.textContent = currentUser.username;
-    avatar.src = currentUser.profilePic || avatar.src;
+/* ---------- Başlangıç: oturum kontrol ---------- */
+window.addEventListener("DOMContentLoaded", ()=>{
+  // load users and current user from storage (in case changed)
+  users = JSON.parse(localStorage.getItem("users") || "{}");
+  currentUserEmail = localStorage.getItem("currentUserEmail") || null;
+
+  if(currentUserEmail && users[currentUserEmail]){
+    loginUIUpdate();
     showSection("hero");
   } else {
-    authSection.classList.add("visible");
+    // eğer hiç giriş yoksa auth görünür başlangıçta (isteğe bağlı)
+    showSection("auth");
   }
-};
+});
