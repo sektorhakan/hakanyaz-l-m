@@ -30,11 +30,6 @@ function showSection(id) {
       s.classList.add("hidden");
     }
   });
-  if (id === "auth" && !currentUserEmail) {
-    authSection.classList.remove("hidden");
-  } else {
-    authSection.classList.add("hidden");
-  }
 }
 
 function showWelcomeToast(name) {
@@ -45,7 +40,7 @@ function showWelcomeToast(name) {
   }, 2000);
 }
 
-avatar && avatar.addEventListener("click", () => {
+avatar.addEventListener("click", () => {
   avatarMenu.classList.toggle("hidden");
 });
 
@@ -92,31 +87,29 @@ function loginUIUpdate() {
   if (!currentUserEmail) return;
   const u = users[currentUserEmail];
   if (!u) { setCurrentUser(null); return; }
-  userInfo.classList.remove("hidden");
+  avatar.classList.remove("hidden");
   usernameDisplay.textContent = u.username;
   avatar.src = u.profilePic || "https://cdn-icons-png.flaticon.com/512/847/847969.png";
-  authSection.classList.add("hidden");
-
-  // Giriş / Kayıt menüsünü gizle
   authNavBtn.style.display = "none";
 }
 
 // Çıkış
 document.getElementById("logoutBtn").addEventListener("click", function() {
   setCurrentUser(null);
-  userInfo.classList.add("hidden");
-  avatar.src = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+  avatar.classList.add("hidden");
+  usernameDisplay.textContent = "";
+  avatarMenu.classList.add("hidden");
   authNavBtn.style.display = "inline-block";
   showSection("auth");
 });
 
-// Profil butonu çalışsın
+// Profil butonu
 document.getElementById("openProfileBtn").addEventListener("click", () => {
   showSection("profile");
   avatarMenu.classList.add("hidden");
 });
 
-// Profil kısmı
+// Profil resmi kaydet
 const fileInput = document.getElementById("profileFile");
 const saveBtn = document.getElementById("saveProfileBtn");
 const preview = document.getElementById("profilePicPreview");
@@ -136,7 +129,7 @@ saveBtn.addEventListener("click", function() {
   r.readAsDataURL(f);
 });
 
-// Başlangıç kontrol
+// Başlangıç
 window.addEventListener("DOMContentLoaded", () => {
   users = JSON.parse(localStorage.getItem("users") || "{}");
   currentUserEmail = localStorage.getItem("currentUserEmail") || null;

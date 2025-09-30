@@ -7,85 +7,84 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div id="left-area">
-      <div id="userInfo" class="user-info hidden">
-        <img id="avatar" class="avatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="avatar" />
-        <span id="usernameDisplay" class="username"></span>
-        <div id="avatarMenu" class="avatar-menu hidden">
-          <button class="menu-btn" id="openProfileBtn">Profil</button>
-          <button class="menu-btn" id="logoutBtn">Çıkış Yap</button>
-        </div>
+  <!-- Üst Menü -->
+  <header class="header">
+    <div class="left">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="avatar" id="avatar" class="avatar hidden">
+      <span id="usernameDisplay" class="username"></span>
+      <div id="avatarMenu" class="avatar-menu hidden">
+        <button id="openProfileBtn">Profil</button>
+        <button id="logoutBtn">Çıkış Yap</button>
       </div>
     </div>
-
-    <nav id="mainNav">
-      <ul>
-        <li><button class="nav-btn" data-target="hero">Ana Sayfa</button></li>
-        <li><button class="nav-btn" data-target="hakkimizda">Hakkımızda</button></li>
-        <li><button class="nav-btn" data-target="hizmetler">Hizmetler</button></li>
-        <li><button class="nav-btn" data-target="projeler">Projeler</button></li>
-        <li><button class="nav-btn" data-target="iletisim">İletişim</button></li>
-        <li><button class="nav-btn" data-target="auth" id="authNavBtn">Giriş / Kayıt</button></li>
-      </ul>
-    </nav>
+    <div class="right">
+      <button class="nav-btn" data-target="hero">Ana Sayfa</button>
+      <button class="nav-btn" data-target="about">Hakkımızda</button>
+      <button class="nav-btn" data-target="services">Hizmetler</button>
+      <button class="nav-btn" data-target="projects">Projeler</button>
+      <button class="nav-btn" data-target="contact">İletişim</button>
+      <button id="authNavBtn" class="nav-btn" data-target="auth">Giriş / Kayıt</button>
+    </div>
   </header>
 
-  <main id="main">
-    <div id="welcomeMessage" class="toast hidden"></div>
+  <!-- Hoşgeldin Mesajı -->
+  <div id="welcomeMessage" class="welcome hidden"></div>
 
+  <!-- Bölümler -->
+  <main>
     <section id="hero" class="page-section active">
-      <h1 class="big-title">Hakan Yazılım Sektör</h1>
-      <p class="subtitle">Yazılım dünyasında geleceğe yön veriyoruz 🚀</p>
+      <h1 class="logo-text">Hakan Yazılım Sektör</h1>
+      <p>Yazılım dünyasında yenilikçi çözümler 🌍</p>
     </section>
 
-    <section id="hakkimizda" class="page-section hidden">
+    <section id="about" class="page-section hidden">
       <h2>Hakkımızda</h2>
-      <p>Biz yazılım sektöründe yenilikçi çözümler üreten bir ekibiz.</p>
+      <p>Biz yazılım sektöründe yenilikler getiren bir ekibiz.</p>
     </section>
 
-    <section id="hizmetler" class="page-section hidden">
+    <section id="services" class="page-section hidden">
       <h2>Hizmetler</h2>
-      <p>Web geliştirme, mobil uygulama ve yazılım danışmanlığı hizmetleri veriyoruz.</p>
+      <p>Web geliştirme, mobil uygulama, yapay zekâ projeleri.</p>
     </section>
 
-    <section id="projeler" class="page-section hidden">
+    <section id="projects" class="page-section hidden">
       <h2>Projeler</h2>
-      <p>Gerçekleştirdiğimiz projeler modern teknolojiyle hazırlanmıştır.</p>
+      <p>Birçok sektöre özel yazılım çözümleri geliştirdik.</p>
     </section>
 
-    <section id="iletisim" class="page-section hidden">
+    <section id="contact" class="page-section hidden">
       <h2>İletişim</h2>
       <p>Bize ulaşın: info@hakanyazilim.com</p>
     </section>
 
     <section id="auth" class="page-section hidden">
-      <div class="auth-wrap">
-        <form id="loginForm" class="auth-box">
-          <h3>Giriş Yap</h3>
-          <input id="loginEmail" type="email" placeholder="E-posta" required />
-          <input id="loginPassword" type="password" placeholder="Parola" required />
-          <button class="primary-btn" type="submit">Giriş Yap</button>
+      <div class="auth-container">
+        <!-- Giriş -->
+        <form id="loginForm">
+          <h2>Giriş Yap</h2>
+          <input type="email" id="loginEmail" placeholder="E-posta" required>
+          <input type="password" id="loginPassword" placeholder="Parola" required>
+          <button type="submit">Giriş Yap</button>
         </form>
-        <form id="registerForm" class="auth-box">
-          <h3>Kayıt Ol</h3>
-          <input id="registerUsername" type="text" placeholder="Kullanıcı Adı" required />
-          <input id="registerEmail" type="email" placeholder="E-posta" required />
-          <input id="registerPassword" type="password" placeholder="Parola" required />
-          <input id="registerConfirmPassword" type="password" placeholder="Parola Tekrar" required />
-          <button class="primary-btn" type="submit">Kayıt Ol</button>
+
+        <!-- Kayıt -->
+        <form id="registerForm">
+          <h2>Kayıt Ol</h2>
+          <input type="text" id="registerUsername" placeholder="Kullanıcı Adı" required>
+          <input type="email" id="registerEmail" placeholder="E-posta" required>
+          <input type="password" id="registerPassword" placeholder="Parola" required>
+          <input type="password" id="registerConfirmPassword" placeholder="Parolayı Doğrula" required>
+          <button type="submit">Kayıt Ol</button>
         </form>
       </div>
     </section>
 
     <section id="profile" class="page-section hidden">
-      <h3>Profil Ayarları</h3>
-      <div class="profile-card">
-        <img id="profilePicPreview" class="profile-pic" src="https://via.placeholder.com/120" alt="profil" />
-        <input id="profileFile" type="file" accept="image/*" class="file-input" />
-        <label for="profileFile" class="file-btn">📷 Fotoğraf Seç</label>
-        <button id="saveProfileBtn" class="save-btn">Fotoğrafı Kaydet</button>
-      </div>
+      <h2>Profil</h2>
+      <img id="profilePicPreview" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profil" class="profile-pic">
+      <input type="file" id="profileFile" hidden>
+      <label for="profileFile" class="custom-file-btn">📷 Fotoğraf Seç</label>
+      <button id="saveProfileBtn" class="save-btn">Kaydet</button>
     </section>
   </main>
 
