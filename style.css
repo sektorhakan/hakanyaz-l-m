@@ -1,0 +1,161 @@
+/* Genel stil */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background: url('https://images.unsplash.com/photo-1518770660439-4636190af475')
+    no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Navbar */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menu-toggle {
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav ul li a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.nav ul li a:hover {
+  color: #00ffea;
+}
+
+/* Bölümler */
+.section {
+  min-height: 100vh;
+  padding: 100px 50px;
+  display: none;
+  animation: fade 0.5s ease-in-out;
+}
+
+.section.active {
+  display: block;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Formlar */
+form {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+input, button {
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  background: #00ffea;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #00ccaa;
+}
+
+/* Mobil uyum */
+@media(max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  .nav {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: rgba(0,0,0,0.9);
+    width: 200px;
+  }
+  .nav.active {
+    display: block;
+  }
+  .nav ul {
+    flex-direction: column;
+    padding: 10px;
+  }
+}
+/* Giriş & Kayıt container */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.auth-box {
+  background: rgba(0,0,0,0.6);
+  padding: 25px;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.auth-box h2 {
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+/* Inputlar */
+.auth-box input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* Butonlar */
+.btn {
+  padding: 12px;
+  background: #00ffea;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #00ccaa;
+  transform: scale(1.05);
+}
