@@ -1,10 +1,13 @@
-// Dropdown avatar menüsü
+// Elemanlar
 const avatar = document.getElementById("avatar");
 const dropdownMenu = document.getElementById("dropdownMenu");
 const userInfo = document.getElementById("userInfo");
 const usernameDisplay = document.getElementById("usernameDisplay");
+const welcomeMessage = document.getElementById("welcomeMessage");
+const authSection = document.getElementById("authSection");
 
-avatar.addEventListener("click", () => {
+// Dropdown açma / kapama
+avatar && avatar.addEventListener("click", () => {
   dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
 });
 
@@ -12,9 +15,8 @@ avatar.addEventListener("click", () => {
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
-// Hoşgeldin mesajı
+// Hoşgeldin mesajı göster, 2 saniye sonra gizle
 function showWelcome(username) {
-  const welcomeMessage = document.getElementById("welcomeMessage");
   welcomeMessage.textContent = `Hoş geldin ${username}!`;
   welcomeMessage.style.display = "block";
   setTimeout(() => {
@@ -22,14 +24,21 @@ function showWelcome(username) {
   }, 2000);
 }
 
-// Bölüm göster
+// Bölüm göster / gizle
 function showSection(id) {
-  document.querySelectorAll(".page-section").forEach(sec => sec.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+  document.querySelectorAll(".page-section").forEach(sec => {
+    sec.classList.add("hidden");
+    sec.classList.remove("active");
+  });
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.remove("hidden");
+    target.classList.add("active");
+  }
 }
 
 // Kayıt ol
-document.getElementById("registerForm").addEventListener("submit", (e) => {
+document.getElementById("registerForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const username = document.getElementById("registerUsername").value;
   const email = document.getElementById("registerEmail").value;
@@ -48,10 +57,13 @@ document.getElementById("registerForm").addEventListener("submit", (e) => {
   users[email] = { username, email, password, profilePic: "" };
   localStorage.setItem("users", JSON.stringify(users));
   alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
+
+  // Giriş formuna geç
+  showSection("hero"); // istersen doğrudan hero ya da auth kısmına
 });
 
 // Giriş yap
-document.getElementById("loginForm").addEventListener("submit", (e) => {
+document.getElementById("loginForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
@@ -68,8 +80,9 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
   currentUser = users[email];
   localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
-  // UI Güncelle
-  document.getElementById("authSection").classList.add("hidden");
+  // UI güncelle
+  authSection.classList.remove("visible");
+  authSection.classList.add("hidden");
   userInfo.classList.remove("hidden");
   usernameDisplay.textContent = currentUser.username;
   avatar.src = currentUser.profilePic || avatar.src;
@@ -82,7 +95,6 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
 function logout() {
   currentUser = null;
   localStorage.removeItem("currentUser");
-  alert("Çıkış yapıldı!");
   location.reload();
 }
 
@@ -91,13 +103,14 @@ function openProfile() {
   document.getElementById("profileSection").classList.remove("hidden");
 }
 
-// Profil resmi kaydet
+// Profil resmini kaydet
 function saveProfilePic() {
-  const file = document.getElementById("profilePicInput").files[0];
-  if (!file) return;
+  const input = document.getElementById("profilePicInput");
+  if (!input.files || input.files.length === 0) return;
 
+  const file = input.files[0];
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = function() {
     currentUser.profilePic = reader.result;
     users[currentUser.email] = currentUser;
     localStorage.setItem("users", JSON.stringify(users));
@@ -108,15 +121,16 @@ function saveProfilePic() {
   reader.readAsDataURL(file);
 }
 
-// Sayfa açılışında giriş kontrolü
-window.onload = () => {
+// Sayfa yüklendiğinde kontrol
+window.onload = function() {
   if (currentUser) {
-    document.getElementById("authSection").classList.add("hidden");
+    authSection.classList.remove("visible");
+    authSection.classList.add("hidden");
     userInfo.classList.remove("hidden");
     usernameDisplay.textContent = currentUser.username;
     avatar.src = currentUser.profilePic || avatar.src;
     showSection("hero");
   } else {
-    showSection("hero");
+    authSection.classList.add("visible");
   }
 };

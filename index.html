@@ -7,9 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Üst kısım -->
   <header>
-    <!-- Avatar + Kullanıcı adı (girişten sonra görünecek) -->
     <div class="user-info hidden" id="userInfo">
       <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar" id="avatar">
       <span id="usernameDisplay"></span>
@@ -18,10 +16,9 @@
         <button onclick="logout()">Çıkış Yap</button>
       </div>
     </div>
-
-    <!-- Menü -->
     <nav>
       <ul>
+        <li><a href="#" onclick="showSection('hero')">Ana Sayfa</a></li>
         <li><a href="#" onclick="showSection('hakkimizda')">Hakkımızda</a></li>
         <li><a href="#" onclick="showSection('hizmetler')">Hizmetler</a></li>
         <li><a href="#" onclick="showSection('projeler')">Projeler</a></li>
@@ -30,10 +27,8 @@
     </nav>
   </header>
 
-  <!-- Hoşgeldin Mesajı -->
   <div id="welcomeMessage" class="welcome">Hoş geldin!</div>
 
-  <!-- Bölümler -->
   <section id="hero" class="page-section active">
     <h1>Hakan Yazılım Sektör</h1>
     <p>Yazılım dünyasında geleceğe yön veriyoruz 🚀</p>
@@ -59,8 +54,8 @@
     <p>Bize ulaşın: info@hakanyazilim.com</p>
   </section>
 
-  <!-- Giriş / Kayıt -->
-  <section class="auth" id="authSection">
+  <!-- Auth: Giriş / Kayıt -->
+  <section class="auth visible" id="authSection">
     <div class="form-container">
       <form id="loginForm">
         <h2>Giriş Yap</h2>
@@ -80,11 +75,10 @@
     </div>
   </section>
 
-  <!-- Profili Düzenle -->
   <section id="profileSection" class="hidden">
     <h2>Profil Ayarları</h2>
     <input type="file" id="profilePicInput">
-    <button onclick="saveProfilePic()">Profil Resmini Kaydet</button>
+    <button class="btn-profile" onclick="saveProfilePic()">📷 Kaydet</button>
     <div>
       <img id="profilePicPreview" class="profile-pic" alt="">
     </div>
